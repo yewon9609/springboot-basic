@@ -1,6 +1,6 @@
 package org.prgrms.voucher.voucherType;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
