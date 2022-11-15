@@ -1,6 +1,7 @@
 package org.prgrms.voucher.discountType;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.prgrms.voucher.VoucherFactory.createVoucher;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,19 +12,17 @@ class DiscountAmountTest {
   @Test
   void incorrectlyEnteredDiscountRate2() {
     //given
-    VoucherType fixed = VoucherType.FIXED;
     String value = "-1";
     //when&then
-    assertThrows(IllegalStateException.class, () -> fixed.generateAmount(value));
+    assertThrows(IllegalStateException.class, () -> createVoucher(VoucherType.FIXED, value));
   }
 
   @DisplayName("입력받은 할인금액이 숫자가 아닐 때 NumberFormatException을 던진다")
   @Test
   void whenDiscountRateNotANumber() {
     //given
-    VoucherType fixed = VoucherType.FIXED;
     String value = "가";
     //when&then
-    assertThrows(NumberFormatException.class, () -> fixed.generateAmount(value));
+    assertThrows(NumberFormatException.class, () -> createVoucher(VoucherType.FIXED, value));
   }
 }
