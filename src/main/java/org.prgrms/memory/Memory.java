@@ -8,5 +8,5 @@ public interface Memory {
 
   Voucher save(Voucher voucher) throws IOException;
 
-  List<String> findAll() throws IOException;
+  List<Voucher> findAll() throws IOException;
 }
