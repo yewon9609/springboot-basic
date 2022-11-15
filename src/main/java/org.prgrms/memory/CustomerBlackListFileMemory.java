@@ -22,14 +22,14 @@ public class CustomerBlackListFileMemory {
   public List<String> findAll() throws IOException {
     List<String> blacklist = new ArrayList<>();
     if (file.exists()) {
-      BufferedReader reader = new BufferedReader(new FileReader(file));
+      try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 
-      String line;
+        String line;
 
-      while ((line = reader.readLine()) != null) {
-        blacklist.add(line);
+        while ((line = reader.readLine()) != null) {
+          blacklist.add(line);
+        }
       }
-      reader.close();
     }
     return blacklist;
   }
