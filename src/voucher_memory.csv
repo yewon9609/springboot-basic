@@ -1,3 +1,2 @@
-*** PercentDiscountVoucher ***
-voucherId : 1368535a-308e-49bd-98d1-d09f701f6a1e
-discountRate: 10%
+PercentDiscountVoucher,1cef6935-427d-4f63-b49c-a9387ee9b05b,10
+FixedAmountVoucher,837ec933-9885-4ee2-aa7e-ed57bf2299d1,1000
