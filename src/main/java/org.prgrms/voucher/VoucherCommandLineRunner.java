@@ -1,15 +1,13 @@
 package org.prgrms.voucher;
 
-import static org.prgrms.voucher.MenuType.CREATE;
 import static org.prgrms.voucher.MenuType.EXIT;
+import static org.prgrms.voucher.VoucherFactory.createVoucher;
 
-import java.io.IOException;
 import java.util.List;
 import org.prgrms.console.Console;
 import org.prgrms.exception.NoSuchMenuTypeException;
 import org.prgrms.memory.CustomerBlackListFileMemory;
 import org.prgrms.memory.Memory;
-import org.prgrms.voucher.discountType.Amount;
 
 import org.prgrms.voucher.voucherType.Voucher;
 import org.prgrms.voucher.voucherType.VoucherType;
@@ -49,14 +47,14 @@ public class VoucherCommandLineRunner implements CommandLineRunner {
           voucherProgramStatus.stop();
         }
 
-      } catch (RuntimeException | IOException e) {
+      } catch (RuntimeException e) {
         console.printErrorMsg(e.getMessage());
         logger.error("class: {}, message: {}", e.getClass().getName(), e.getMessage());
       }
     }
   }
 
-  private MenuType execute() throws IOException {
+  private MenuType execute() {
     MenuType menu = MenuType.of(console.chooseMenu());
     logger.info("Menu : {}", menu);
 
@@ -66,19 +64,19 @@ public class VoucherCommandLineRunner implements CommandLineRunner {
       }
 
       case CREATE -> {
-        Voucher savedVoucher = createVoucher();
+        Voucher savedVoucher = saveVoucher();
         console.printSavedVoucher(savedVoucher);
         logger.info("saved_voucher: {}", savedVoucher);
-        return CREATE;
+        return MenuType.CREATE;
       }
 
       case LIST -> {
-        List<String> voucherList = voucherMemory.findAll();
+        List<Voucher> voucherList = voucherMemory.findAll();
+
         console.printVoucherList(voucherList);
         logger.info("voucherList: {}", voucherList);
         return MenuType.LIST;
       }
-
       case BLACK -> {
         console.printBlackList(showCustomerBlackList());
         return MenuType.BLACK;
@@ -89,7 +87,7 @@ public class VoucherCommandLineRunner implements CommandLineRunner {
     }
   }
 
-  public Voucher createVoucher() {
+  public Voucher saveVoucher() {
 
     while (true) {
       try {
@@ -97,15 +95,14 @@ public class VoucherCommandLineRunner implements CommandLineRunner {
         String inputAmount = console.enteredAmount(voucherType);
         logger.info("input_amount: {}", inputAmount);
 
-        Amount amount = voucherType.generateAmount(inputAmount);
-
-        return voucherMemory.save(voucherType.generateVoucher(amount));
-      } catch (RuntimeException | IOException e) {
+        return voucherMemory.save(createVoucher(voucherType, inputAmount));
+      } catch (RuntimeException e) {
         console.printErrorMsg(e.getMessage());
         logger.warn("class: {}, message: {}", e.getClass().getName(), e.getMessage());
       }
     }
   }
+
 
   private VoucherType enteredVoucherType() {
     String inputType = console.chooseVoucherType();
@@ -116,8 +113,9 @@ public class VoucherCommandLineRunner implements CommandLineRunner {
     return menuType == EXIT;
   }
 
-  private List<String> showCustomerBlackList() throws IOException {
+  private List<String> showCustomerBlackList() {
     List<String> blacklist = blackListFileMemory.findAll();
+
     logger.info("customer_blacklist: {}", blacklist);
     return blacklist;
   }

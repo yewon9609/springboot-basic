@@ -48,7 +48,7 @@ class VoucherMemoryTest {
     }
 
     //when
-    List<String> vouchers = voucherMemory.findAll();
+    List<Voucher> vouchers = voucherMemory.findAll();
     //then
     assertEquals(VOUCHER_SIZE, vouchers.size());
 
@@ -58,7 +58,7 @@ class VoucherMemoryTest {
   @Test
   void withoutVoucher() {
     //when
-    List<String> vouchers = voucherMemory.findAll();
+    List<Voucher> vouchers = voucherMemory.findAll();
     //then
     assertTrue(vouchers.isEmpty());
   }
