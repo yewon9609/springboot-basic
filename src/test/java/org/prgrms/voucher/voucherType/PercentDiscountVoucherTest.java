@@ -12,7 +12,7 @@ class PercentDiscountVoucherTest {
   @Test
   void testDiscount() {
     //given
-    String givenDiscountRate = "30";
+    long givenDiscountRate = 30L;
     PercentDiscountVoucher percentDiscountVoucher= new PercentDiscountVoucher(UUID.randomUUID(),
         new DiscountRate(givenDiscountRate));
     //when

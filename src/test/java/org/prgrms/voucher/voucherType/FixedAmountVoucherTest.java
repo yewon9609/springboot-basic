@@ -14,7 +14,7 @@ class FixedAmountVoucherTest {
   @Test
   void testDiscount() {
     //given
-    String givenAmount = "100";
+    long givenAmount = 100L;
     FixedAmountVoucher fixedAmountVoucher = new FixedAmountVoucher(UUID.randomUUID(),
         new DiscountAmount(givenAmount));
     //when
@@ -25,12 +25,12 @@ class FixedAmountVoucherTest {
     assertEquals(900, discounted);
   }
 
-  @DisplayName("할인 된 금액이 마이너스 일때 PaymentCannotBeNegativeException을 던진다")
+  @DisplayName("할인이 결제금액보다 클 때  PaymentCannotBeNegativeException을 던진다")
   @Test
   void testWithMinus() {
     //given
     FixedAmountVoucher fixedAmountVoucher = new FixedAmountVoucher(UUID.randomUUID(),
-        new DiscountAmount("1000"));
+        new DiscountAmount(1000L));
     //when&then
     assertThrows(PaymentCannotBeNegativeException.class,() -> fixedAmountVoucher.discount(500L));
   }
