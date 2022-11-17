@@ -24,4 +24,8 @@ public class VoucherInMemory implements Memory {
   public List<Voucher> findAll() {
     return new ArrayList<>(voucherMemory.values());
   }
+
+  public Voucher findById(UUID id) {
+    return voucherMemory.get(id);
+  }
 }
