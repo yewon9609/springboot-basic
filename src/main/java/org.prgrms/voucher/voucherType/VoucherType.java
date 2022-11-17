@@ -45,7 +45,7 @@ public enum VoucherType {
     return this.voucher.apply(UUID.randomUUID(),discount);
   }
 
-  public Voucher generateFileVoucher(UUID id, Amount discount) {
+  public Voucher generateVoucherWithId(UUID id, Amount discount) {
     return this.voucher.apply(id, discount);
   }
 

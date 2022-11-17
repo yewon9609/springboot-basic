@@ -8,12 +8,12 @@ public class FixedAmountVoucher implements Voucher {
 
   private final UUID voucherId;
   private final Amount discountAmount;
-
+  private final VoucherType type;
 
   public FixedAmountVoucher(UUID voucherId, Amount discountAmount) {
     this.voucherId = voucherId;
     this.discountAmount = discountAmount;
-
+    this.type = VoucherType.FIXED;
   }
 
   @Override
@@ -23,6 +23,10 @@ public class FixedAmountVoucher implements Voucher {
       throw new PaymentCannotBeNegativeException(discountedAmount);
     }
     return discountedAmount;
+  }
+
+  public VoucherType getVoucherType() {
+    return type;
   }
 
   @Override
@@ -43,4 +47,5 @@ public class FixedAmountVoucher implements Voucher {
         + System.lineSeparator()
         + "discountAmount: " + discountAmount.getValue() + "won";
   }
+
 }
